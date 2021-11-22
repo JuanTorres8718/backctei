@@ -30,6 +30,7 @@ export const createNewProduct = async (req, res) => {
   try {
     const dataProduct = req.body.product;
     const dataTalent = req.body.talent;
+    const dataSemillero = req.body.semilleros;
 
     const pool = await getConnection();
 
@@ -49,7 +50,6 @@ export const createNewProduct = async (req, res) => {
         dataProduct.fecha_registro_producto
       )
       .input("codigo_tipologia", sql.Int, dataProduct.codigo_tipologia)
-      .input("codigo_semillero", sql.Int, dataProduct.codigo_semillero)
       .input("codigo_proyecto", sql.Int, dataProduct.codigo_proyecto)
       .query(queries.addNewProduct);
 
@@ -70,6 +70,7 @@ export const createNewProduct = async (req, res) => {
             sql.VarChar,
             talent.tiempo_dedicacion_semanal
           )
+          .input("genero", sql.VarChar, talent.genero)
           .input(
             "valor_mensual_contrato",
             sql.Int,
@@ -106,8 +107,17 @@ export const createNewProduct = async (req, res) => {
       });
     }
 
+    dataSemillero.forEach(async (semillero) => {
+      await pool
+        .request()
+        .input("codigo_producto", dataProduct.codigo_productos)
+        .input("codigo_semillero", semillero.value)
+        .query(queries.addDetalleSemilleroProducto);
+    });
+
     res.status(201).json(dataProduct);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: error.message,
     });

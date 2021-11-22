@@ -32,6 +32,8 @@ export const createNewProjects = async (req, res) => {
     const dataMaquinary = req.body.maquinary;
     const dataTalent = req.body.talent;
     const dataRubros = req.body.rubros;
+    const dataMunicipio = req.body.municipios;
+    const dataSemillero = req.body.semilleros;
     let valor_servicios_personales = 0;
     let valor_otros_gastos = 0;
     let valor_compra_equipos = 0;
@@ -88,9 +90,8 @@ export const createNewProjects = async (req, res) => {
         dataProject.codigo_estado_proyecto
       )
       .input("codigo_centro", sql.Int, dataProject.codigo_centro)
-      .input("codigo_cpiu", sql.Int, dataProject.codigo_cpiu)
-      .input("codigo_disciplina", sql.Int, dataProject.codigo_disciplina)
-      .input("codigo_semillero", sql.Int, dataProject.codigo_semillero)
+      .input("codigo_ciiu", sql.VarChar, dataProject.codigo_ciiu)
+      .input("codigo_disciplina", sql.VarChar, dataProject.codigo_disciplina)
       .input("codigo_area_ocde", sql.Int, dataProject.codigo_area_ocde)
       .input(
         "codigo_subarea_conocimiento",
@@ -117,6 +118,7 @@ export const createNewProjects = async (req, res) => {
           sql.VarChar,
           talent.tiempo_dedicacion_semanal
         )
+        .input("genero", sql.VarChar, talent.genero)
         .input("valor_mensual_contrato", sql.Int, talent.valor_mensual_contrato)
         .input("valor_total_contrato", sql.Int, talent.valor_total_contrato)
         .input("sena_sennova", sql.VarChar, talent.sena_sennova)
@@ -186,13 +188,29 @@ export const createNewProjects = async (req, res) => {
       .input("codigo_proyecto", dataProject.codigo_proyecto)
       .query(queries.addValuesProject);
 
+    dataSemillero.map(async (semillero) => {
+      await pool
+        .request()
+        .input("codigo_proyecto", sql.Int, dataProject.codigo_proyecto)
+        .input("codigo_semillero", sql.Int, semillero.value)
+        .query(queries.addDetalleSemilleroProyecto);
+    });
+
+    dataMunicipio.map(async (municipio) => {
+      await pool
+        .request()
+        .input("codigo_proyecto", dataProject.codigo_proyecto)
+        .input("codigo_municipio", municipio.value)
+        .query(queries.addDetalleMunicipioProyecto);
+    });
+
     const project = await pool
       .request()
       .query(
         `SELECT TOP 1 * FROM dbctei.proyecto_principal ORDER BY fecha_creacion DESC`
       );
 
-    res.status(201).json(project.recordset[0]);
+    res.status(201).json(project);
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -217,7 +235,6 @@ export const updateProject = async (req, res) => {
       codigo_linea_programatica,
       codigo_estado_proyecto,
       codigo_centro,
-      codigo_semillero,
     } = req.body;
 
     const pool = await getConnection();
@@ -235,7 +252,6 @@ export const updateProject = async (req, res) => {
       .input("codigo_linea_programatica", sql.Int, codigo_linea_programatica)
       .input("codigo_estado_proyecto", sql.Int, codigo_estado_proyecto)
       .input("codigo_centro", sql.Int, codigo_centro)
-      .input("codigo_semillero", sql.Int, codigo_semillero)
       .input("codigo_area_ocde", sql.Int, codigo_area_ocde)
       .input(
         "codigo_subarea_conocimiento",

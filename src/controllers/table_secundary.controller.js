@@ -169,3 +169,29 @@ export const getProyectos = async (req, res) => {
     });
   }
 };
+
+export const getCiiu = async (req, res) => {
+  try {
+    const pool = await getConnection();
+    const result = await pool.request().query(queries.getAllCiiu);
+
+    res.json(result.recordset);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getDisciplina = async (req, res) => {
+  try {
+    const pool = await getConnection();
+    const result = await pool.request().query(queries.getAllDisciplina);
+
+    res.json(result.recordset);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

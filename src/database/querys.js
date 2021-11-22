@@ -4,9 +4,9 @@ export const queries = {
   getOneProject:
     "SELECT * FROM dbctei.proyecto_principal WHERE codigo_proyecto = @codigo_proyecto",
   addNewProject:
-    "INSERT INTO dbctei.proyecto_principal (codigo_proyecto,nombre_proyecto,presupuesto_solicitado,presupuesto_aprobado,presupuesto_asignado,observacion_general,fecha_inicio_proyecto,fecha_cierre_proyecto,industria_4_0,economia_naranja, politica_institucional, proyecto_financiado, resumen_proyecto,video_proyecto, archivo_proyecto,informe_investigacion, codigo_centro, codigo_cpiu, codigo_disciplina, codigo_estado_proyecto,codigo_linea_programatica,codigo_semillero, codigo_area_ocde, codigo_subarea_conocimiento, codigo_red_conocimiento) VALUES (@codigo_proyecto, @nombre_proyecto, @presupuesto_solicitado, @presupuesto_aprobado, @presupuesto_asignado, @observacion_general, @fecha_inicio_proyecto, @fecha_cierre_proyecto, @industria_4_0,@economia_naranja, @politica_institucional, @proyecto_financiado, @resumen_proyecto,@video_proyecto, @archivo_proyecto, @informe_investigacion, @codigo_centro, @codigo_cpiu, @codigo_disciplina, @codigo_estado_proyecto, @codigo_linea_programatica, @codigo_semillero, @codigo_area_ocde, @codigo_subarea_conocimiento, @codigo_red_conocimiento)",
+    "INSERT INTO dbctei.proyecto_principal (codigo_proyecto,nombre_proyecto,presupuesto_solicitado,presupuesto_aprobado,presupuesto_asignado,observacion_general,fecha_inicio_proyecto,fecha_cierre_proyecto,industria_4_0,economia_naranja, politica_institucional, proyecto_financiado, resumen_proyecto,video_proyecto, archivo_proyecto,informe_investigacion, codigo_centro, codigo_ciiu, codigo_disciplina, codigo_estado_proyecto,codigo_linea_programatica, codigo_area_ocde, codigo_subarea_conocimiento, codigo_red_conocimiento) VALUES (@codigo_proyecto, @nombre_proyecto, @presupuesto_solicitado, @presupuesto_aprobado, @presupuesto_asignado, @observacion_general, @fecha_inicio_proyecto, @fecha_cierre_proyecto, @industria_4_0,@economia_naranja, @politica_institucional, @proyecto_financiado, @resumen_proyecto,@video_proyecto, @archivo_proyecto, @informe_investigacion, @codigo_centro, @codigo_ciiu, @codigo_disciplina, @codigo_estado_proyecto, @codigo_linea_programatica, @codigo_area_ocde, @codigo_subarea_conocimiento, @codigo_red_conocimiento)",
   editProject:
-    "UPDATE dbctei.proyecto_principal SET nombre_proyecto = @nombre_proyecto, presupuesto_asignado = @presupuesto_asignado, fecha_inicio_proyecto = @fecha_inicio_proyecto, fecha_cierre_proyecto = @fecha_cierre_proyecto, industria_4_0 = @industria_4_0, economia_naranja = @economia_naranja, politica_institucional = @politica_institucional, archivo_proyecto = @archivo_proyecto, codigo_linea_programatica = @codigo_linea_programatica, codigo_estado_proyecto = @codigo_estado_proyecto, codigo_centro = @codigo_centro, codigo_semillero = @codigo_semillero, codigo_area_ocde = @codigo_area_ocde, codigo_subarea_conocimiento = @codigo_subarea_conocimiento codigo_red_conocimiento = @codigo_red_conocimiento WHERE codigo_proyecto = @codigo_proyecto",
+    "UPDATE dbctei.proyecto_principal SET nombre_proyecto = @nombre_proyecto, presupuesto_asignado = @presupuesto_asignado, fecha_inicio_proyecto = @fecha_inicio_proyecto, fecha_cierre_proyecto = @fecha_cierre_proyecto, industria_4_0 = @industria_4_0, economia_naranja = @economia_naranja, politica_institucional = @politica_institucional, archivo_proyecto = @archivo_proyecto, codigo_linea_programatica = @codigo_linea_programatica, codigo_estado_proyecto = @codigo_estado_proyecto, codigo_centro = @codigo_centro, codigo_area_ocde = @codigo_area_ocde, codigo_subarea_conocimiento = @codigo_subarea_conocimiento codigo_red_conocimiento = @codigo_red_conocimiento WHERE codigo_proyecto = @codigo_proyecto",
   deleteProject:
     "DELETE FROM dbctei.proyecto_principal WHERE codigo_proyecto = @codigo_proyecto",
   getIdNameProjec:
@@ -31,7 +31,7 @@ export const queries = {
   getOneMaquinary:
     "SELECT * FROM dbctei.registro_equipo WHERE codigo_equipo = @codigo_equipo",
   addNewMaquinary:
-    "INSERT INTO dbctei.registro_equipo (descripcion_equipo, valor_equipo, fecha_compra, codigo_tipo_equipo, codigo_proyecto) VALUES (@descripcion_equipo, @valor_equipo, @fecha_compra, @codigo_tipo_equipo, @codigo_proyecto)",
+    "INSERT INTO dbctei.registro_equipo (descripcion_equipo, valor_equipo, fecha_compra, codigo_tipo_equipo, codigo_proyecto, codigo_producto) VALUES (@descripcion_equipo, @valor_equipo, @fecha_compra, @codigo_tipo_equipo, @codigo_proyecto, @codigo_producto)",
   editMaquinary:
     "UPDATE dbctei.registro_equipo SET descripcion_equipo = @descripcion_equipo, valor_equipo = @valor_equipo, fecha_compra = @fecha_compra, codigo_tipo_equipo = @codigo_tipo_equipo, codigo_proyecto = @codigo_proyecto WHERE codigo_equipo = @codigo_equipo",
   deleteMaquinary:
@@ -42,9 +42,9 @@ export const queries = {
   getOneProduct:
     "SELECT * FROM dbctei.productos_principal WHERE codigo_productos = @codigo_productos",
   addNewProduct:
-    "INSERT INTO dbctei.productos_principal (codigo_productos, nombre_productos, descripcion_producto, link_producto, aval_autor, tipo_intangible, intangible, fecha_registro_producto, codigo_tipologia, codigo_semillero, codigo_proyecto) VALUES (@codigo_productos, @nombre_productos, @descripcion_producto, @link_producto, @aval_autor, @tipo_intangible, @intangible, @fecha_registro_producto, @codigo_tipologia, @codigo_semillero, @codigo_proyecto)",
+    "INSERT INTO dbctei.productos_principal (codigo_productos, nombre_productos, descripcion_producto, link_producto, aval_autor, tipo_intangible, intangible, fecha_registro_producto, codigo_tipologia, codigo_proyecto) VALUES (@codigo_productos, @nombre_productos, @descripcion_producto, @link_producto, @aval_autor, @tipo_intangible, @intangible, @fecha_registro_producto, @codigo_tipologia, @codigo_proyecto)",
   editProduct:
-    "UPDATE dbctei.productos_principal SET codigo_productos = @codigo_productos, nombre_productos = @nombre_productos, fecha_registro_producto = @fecha_registro_producto, codigo_tipologia = @codigo_tipologia, codigo_semillero = @codigo_semillero, codigo_proyecto = @codigo_proyecto WHERE codigo_productos = @codigo_productos",
+    "UPDATE dbctei.productos_principal SET codigo_productos = @codigo_productos, nombre_productos = @nombre_productos, fecha_registro_producto = @fecha_registro_producto, codigo_tipologia = @codigo_tipologia, codigo_proyecto = @codigo_proyecto WHERE codigo_productos = @codigo_productos",
   deleteProduct:
     "DELETE FROM dbctei.productos_principal WHERE codigo_productos = @codigo_productos",
 
@@ -85,6 +85,18 @@ export const queries = {
   addDetalleRubroProyecto:
     "INSERT INTO dbctei.detalle_rubro_proyecto (codigo_proyecto, codigo_rubro, valor_rubro) VALUES (@codigo_proyecto, @codigo_rubro, @valor_rubro)",
 
+  //detalle semillero-proyecto
+  addDetalleSemilleroProyecto:
+    "INSERT INTO dbctei.detalle_semillero_proyecto (codigo_proyecto, codigo_semillero) VALUES (@codigo_proyecto, @codigo_semillero)",
+
+  //detalle semillero-producto
+  addDetalleSemilleroProducto:
+    "INSERT INTO dbctei.detalle_semillero_producto (codigo_producto, codigo_semillero) VALUES (@codigo_producto, @codigo_semillero)",
+
+  //detalle municipio-proyecto
+  addDetalleMunicipioProyecto:
+    "INSERT INTO dbctei.detalle_municipio_proyecto (codigo_proyecto, codigo_municipio) VALUES (@codigo_proyecto, @codigo_municipio)",
+
   //tablas secundarias
   getAllRed: "SELECT * FROM dbctei.red_conocimiento",
   getAllReginal: "SELECT * FROM dbctei.regional",
@@ -100,4 +112,6 @@ export const queries = {
   getAllRolSennova: "SELECT * FROM dbctei.rol_sennova",
   getAllSemilleros: "SELECT * FROM dbctei.semillero",
   getAllRubros: "SELECT * FROM dbctei.rubros",
+  getAllCiiu: "SELECT * FROM dbctei.actividad_ciiu",
+  getAllDisciplina: "SELECT * FROM dbctei.disciplina",
 };

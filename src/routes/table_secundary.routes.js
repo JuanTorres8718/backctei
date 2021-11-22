@@ -12,6 +12,8 @@ const {
   getRolSennova,
   getRubros,
   getProyectos,
+  getCiiu,
+  getDisciplina,
 } = require("../controllers/table_secundary.controller");
 
 const router = require("express").Router();
@@ -41,5 +43,9 @@ router.get("/api/table/rol_sennova", getRolSennova);
 router.get("/api/table/rubros", getRubros);
 
 router.get("/api/table/proyectos", getProyectos);
+
+router.get("/api/table/ciiu", getCiiu);
+
+router.get("/api/table/disciplina", getDisciplina);
 
 module.exports = router;
