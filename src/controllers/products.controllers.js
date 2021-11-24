@@ -31,6 +31,7 @@ export const createNewProduct = async (req, res) => {
     const dataProduct = req.body.product;
     const dataTalent = req.body.talent;
     const dataSemillero = req.body.semilleros;
+    const dataMaquinary = req.body.maquinary;
 
     const pool = await getConnection();
 
@@ -105,6 +106,18 @@ export const createNewProduct = async (req, res) => {
           .input("codigo_talento", resultado.codigo_talento)
           .query(queries.addDetalleProductTalent);
       });
+    }
+
+    if (dataMaquinary) {
+      await pool
+        .request()
+        .input("descripcion_equipo", sql.Text, dataMaquinary.descripcion_equipo)
+        .input("valor_equipo", sql.Int, dataMaquinary.valor_equipo)
+        .input("fecha_compra", sql.Date, dataMaquinary.fecha_compra)
+        .input("codigo_tipo_equipo", sql.Int, dataMaquinary.codigo_tipo_equipo)
+        .input("codigo_proyecto", null)
+        .input("codigo_producto", sql.Int, dataProduct.codigo_productos)
+        .query(queries.addNewMaquinary);
     }
 
     dataSemillero.forEach(async (semillero) => {

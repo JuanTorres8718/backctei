@@ -169,6 +169,7 @@ export const createNewProjects = async (req, res) => {
         .input("fecha_compra", sql.Date, dataMaquinary.fecha_compra)
         .input("codigo_tipo_equipo", sql.Int, dataMaquinary.codigo_tipo_equipo)
         .input("codigo_proyecto", sql.Int, dataProject.codigo_proyecto)
+        .input("codigo_producto", null)
         .query(queries.addNewMaquinary);
     }
 

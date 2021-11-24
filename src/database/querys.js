@@ -33,7 +33,7 @@ export const queries = {
   addNewMaquinary:
     "INSERT INTO dbctei.registro_equipo (descripcion_equipo, valor_equipo, fecha_compra, codigo_tipo_equipo, codigo_proyecto, codigo_producto) VALUES (@descripcion_equipo, @valor_equipo, @fecha_compra, @codigo_tipo_equipo, @codigo_proyecto, @codigo_producto)",
   editMaquinary:
-    "UPDATE dbctei.registro_equipo SET descripcion_equipo = @descripcion_equipo, valor_equipo = @valor_equipo, fecha_compra = @fecha_compra, codigo_tipo_equipo = @codigo_tipo_equipo, codigo_proyecto = @codigo_proyecto WHERE codigo_equipo = @codigo_equipo",
+    "UPDATE dbctei.registro_equipo SET descripcion_equipo = @descripcion_equipo, valor_equipo = @valor_equipo, fecha_compra = @fecha_compra, codigo_tipo_equipo = @codigo_tipo_equipo, codigo_proyecto = @codigo_proyecto, codigo_producto = @codigo_producto WHERE codigo_equipo = @codigo_equipo",
   deleteMaquinary:
     "DELETE FROM dbctei.registro_equipo WHERE codigo_equipo = @codigo_equipo",
 
