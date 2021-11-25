@@ -143,29 +143,38 @@ export const updateProduct = async (req, res) => {
     const {
       nombre_productos,
       descripcion_producto,
-      link_producto,
-      tipo_intangible,
       fecha_registro_producto,
+      link_producto,
+      aval_autor,
+      tipo_intangible,
+      intangible,
       codigo_tipologia,
-      codigo_semillero,
-      codigo_proyecto,
     } = req.body;
+
+    const pool = await getConnection();
 
     await pool
       .request()
-      .input("codigo_productos", sql.Int, codigo_productos)
       .input("nombre_productos", sql.VarChar, nombre_productos)
       .input("descripcion_producto", sql.Text, descripcion_producto)
       .input("link_producto", sql.Text, link_producto)
-      .input("tipo_intangible", sql.Text, tipo_intangible)
       .input("fecha_registro_producto", sql.Date, fecha_registro_producto)
+      .input("aval_autor", sql.Bit, aval_autor)
+      .input("tipo_intangible", sql.Bit, tipo_intangible)
+      .input("intangible", sql.Text, intangible)
       .input("codigo_tipologia", sql.Int, codigo_tipologia)
-      .input("codigo_semillero", sql.Int, codigo_semillero)
-      .input("codigo_proyecto", sql.Int, codigo_proyecto)
+      .input("codigo_productos", sql.Int, codigo_productos)
       .query(queries.editProduct);
 
-    res.status(201).json("actualizado producto número " + codigo_productos);
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM dbctei.productos_principal WHERE codigo_productos =${codigo_productos}`
+      );
+
+    res.status(201).json(result.recordset[0]);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: error.message,
     });

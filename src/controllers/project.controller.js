@@ -226,16 +226,26 @@ export const updateProject = async (req, res) => {
 
     const {
       nombre_proyecto,
+      presupuesto_solicitado,
+      presupuesto_aprobado,
       presupuesto_asignado,
+      observacion_general,
       fecha_inicio_proyecto,
       fecha_cierre_proyecto,
-      archivo_proyecto,
+      codigo_centro,
+      codigo_linea_programatica,
+      codigo_red_conocimiento,
+      codigo_ciiu,
+      codigo_area_ocde,
+      codigo_subarea_conocimiento,
+      codigo_disciplina,
+      proyecto_financiado,
+      resumen_proyecto,
+      video_proyecto,
+      codigo_estado_proyecto,
       industria_4_0,
       economia_naranja,
       politica_institucional,
-      codigo_linea_programatica,
-      codigo_estado_proyecto,
-      codigo_centro,
     } = req.body;
 
     const pool = await getConnection();
@@ -243,28 +253,42 @@ export const updateProject = async (req, res) => {
     await pool
       .request()
       .input("nombre_proyecto", sql.VarChar, nombre_proyecto)
+      .input("presupuesto_solicitado", sql.Int, presupuesto_solicitado)
+      .input("presupuesto_aprobado", sql.Int, presupuesto_aprobado)
       .input("presupuesto_asignado", sql.Int, presupuesto_asignado)
+      .input("observacion_general", sql.Text, observacion_general)
       .input("fecha_inicio_proyecto", sql.Date, fecha_inicio_proyecto)
       .input("fecha_cierre_proyecto", sql.Date, fecha_cierre_proyecto)
       .input("industria_4_0", sql.Text, industria_4_0)
       .input("economia_naranja", sql.Text, economia_naranja)
       .input("politica_institucional", sql.Text, politica_institucional)
-      .input("archivo_proyecto", sql.VarChar, archivo_proyecto)
       .input("codigo_linea_programatica", sql.Int, codigo_linea_programatica)
       .input("codigo_estado_proyecto", sql.Int, codigo_estado_proyecto)
       .input("codigo_centro", sql.Int, codigo_centro)
+      .input("proyecto_financiado", sql.Bit, proyecto_financiado)
+      .input("resumen_proyecto", sql.Text, resumen_proyecto)
+      .input("video_proyecto", sql.VarChar, video_proyecto)
       .input("codigo_area_ocde", sql.Int, codigo_area_ocde)
       .input(
         "codigo_subarea_conocimiento",
         sql.Int,
-        dataProject.codigo_subarea_conocimiento
+        codigo_subarea_conocimiento
       )
+      .input("codigo_ciiu", sql.VarChar, codigo_ciiu)
+      .input("codigo_disciplina", sql.VarChar, codigo_disciplina)
       .input("codigo_red_conocimiento", sql.Int, codigo_red_conocimiento)
       .input("codigo_proyecto", sql.Int, codigo_proyecto)
       .query(queries.editProject);
 
-    res.status(201).json("actualizado proyecto número " + codigo_proyecto);
+    const project = await pool
+      .request()
+      .query(
+        `SELECT * FROM dbctei.proyecto_principal WHERE codigo_proyecto = ${codigo_proyecto}`
+      );
+
+    res.status(201).json(project.recordset[0]);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: error.message,
     });

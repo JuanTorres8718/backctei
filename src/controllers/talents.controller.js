@@ -35,16 +35,15 @@ export const updateTalent = async (req, res) => {
     const {
       nombre_persona,
       objeto_contrato,
+      genero,
       fecha_inicio_contrato,
       fecha_fin_contrato,
       tiempo_dedicacion_semanal,
-      valor_mensual_contrato,
-      valor_total_contrato,
-      sena_sennova,
       codigo_nivel,
       codigo_tipo_contrato,
       codigo_rol_sennova,
       codigo_rol_proyecto,
+      codigo_estado_contrato,
     } = req.body;
 
     const pool = await getConnection();
@@ -53,6 +52,7 @@ export const updateTalent = async (req, res) => {
       .request()
       .input("nombre_persona", sql.VarChar, nombre_persona)
       .input("objeto_contrato", sql.VarChar, objeto_contrato)
+      .input("genero", sql.VarChar, genero)
       .input("fecha_inicio_contrato", sql.Date, fecha_inicio_contrato)
       .input("fecha_fin_contrato", sql.Date, fecha_fin_contrato)
       .input(
@@ -60,18 +60,21 @@ export const updateTalent = async (req, res) => {
         sql.VarChar,
         tiempo_dedicacion_semanal
       )
-      .input("valor_mensual_contrato", sql.Int, valor_mensual_contrato)
-      .input("valor_total_contrato", sql.Int, valor_total_contrato)
-      .input("sena_sennova", sql.VarChar, sena_sennova)
       .input("codigo_nivel", sql.Int, codigo_nivel)
       .input("codigo_tipo_contrato", sql.Int, codigo_tipo_contrato)
       .input("codigo_rol_sennova", sql.Int, codigo_rol_sennova)
       .input("codigo_rol_proyecto", sql.Int, codigo_rol_proyecto)
-      .input("codigo_estado_contrato", sql.Int, talent.codigo_estado_contrato)
+      .input("codigo_estado_contrato", sql.Int, codigo_estado_contrato)
       .input("codigo_talento", sql.Int, codigo_talento)
-      .query(queries.addNewTalent);
+      .query(queries.editTalent);
 
-    res.status(201).json("actualizado talento humano número " + codigo_talento);
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM dbctei.talento_humano WHERE codigo_talento =${codigo_talento}`
+      );
+
+    res.status(201).json(result.recordset[0]);
   } catch (error) {
     res.status(500).json({
       message: error.message,
