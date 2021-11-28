@@ -1,11 +1,11 @@
 import sql from "mssql";
-import config from "../config";
+require("dotenv").config();
 
 const dbSettings = {
-  user: "juan",
-  password: "123456",
-  server: "localhost",
-  database: "dbctei",
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  server: process.env.SERVER,
+  database: process.env.DATABASE,
   options: {
     encrypt: false,
     trustServerCertificate: true,

@@ -7,6 +7,7 @@ import productsRoutes from "./routes/products.routes";
 import usersRoutes from "./routes/users.routes";
 import tablesRoutes from "./routes/table_secundary.routes";
 import filesRoutes from "./routes/files.routes";
+import stadisticRoutes from "./routes/stadistic.routes";
 
 const app = express();
 const dotenv = require("dotenv");
@@ -27,5 +28,6 @@ app.use(talentsRoutes);
 app.use(maquinaryRoutes);
 app.use(productsRoutes);
 app.use(filesRoutes);
+app.use(stadisticRoutes);
 
 export default app;

@@ -114,4 +114,11 @@ export const queries = {
   getAllRubros: "SELECT * FROM dbctei.rubros",
   getAllCiiu: "SELECT * FROM dbctei.actividad_ciiu",
   getAllDisciplina: "SELECT * FROM dbctei.disciplina",
+
+  //Estadisticas
+  getAllValues:
+    "SELECT	SUM(valor_proyecto) as suma_proyectos, SUM(valor_servicios_personales) as suma_servicios, SUM(valor_compra_equipos) as suma_equipos, SUM(valor_otros_gastos) as suma_otros_rubros,SUM(valor_software) as suma_software FROM dbctei.proyecto_principal",
+
+  getCategoriesTalent:
+    "SELECT codigo_nivel,codigo_tipo_contrato, codigo_rol_sennova, codigo_rol_proyecto FROM dbctei.talento_humano as tal JOIN dbctei.detalle_proyecto_talento as detalle ON tal.codigo_talento = detalle.codigo_talento",
 };
