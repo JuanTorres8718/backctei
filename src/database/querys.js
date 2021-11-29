@@ -97,6 +97,10 @@ export const queries = {
   addDetalleMunicipioProyecto:
     "INSERT INTO dbctei.detalle_municipio_proyecto (codigo_proyecto, codigo_municipio) VALUES (@codigo_proyecto, @codigo_municipio)",
 
+  //detalle formacion-proyecto
+  addDetalleFormacionProyecto:
+    "INSERT INTO dbctei.detalle_formacion_proyecto (codigo_proyecto, codigo_formacion) VALUES (@codigo_proyecto, @codigo_formacion)",
+
   //tablas secundarias
   getAllRed: "SELECT * FROM dbctei.red_conocimiento",
   getAllReginal: "SELECT * FROM dbctei.regional",
@@ -114,6 +118,7 @@ export const queries = {
   getAllRubros: "SELECT * FROM dbctei.rubros",
   getAllCiiu: "SELECT * FROM dbctei.actividad_ciiu",
   getAllDisciplina: "SELECT * FROM dbctei.disciplina",
+  getAllFormacion: "SELECT * FROM dbctei.formacion_ctei",
 
   //Estadisticas
   getAllValues:
@@ -121,4 +126,10 @@ export const queries = {
 
   getCategoriesTalent:
     "SELECT codigo_nivel,codigo_tipo_contrato, codigo_rol_sennova, codigo_rol_proyecto FROM dbctei.talento_humano as tal JOIN dbctei.detalle_proyecto_talento as detalle ON tal.codigo_talento = detalle.codigo_talento",
+
+  getPorcentACTI:
+    "select convert(decimal(4,2),sum(valor_servicios_personales)*100.0/sum(valor_proyecto)) as valor_talento, convert(decimal(4,2),sum(valor_compra_equipos)*100.0/sum(valor_proyecto)) as valor_equipos, convert(decimal(4,2),sum(valor_software)*100.0/sum(valor_proyecto)) as valor_software, convert(decimal(4,2),sum(valor_otros_gastos)*100.0/sum(valor_proyecto)) as valor_otros_gastos from dbctei.proyecto_principal",
+
+  getTotalACTI:
+    "select sum(valor_proyecto) as valor_total from dbctei.proyecto_principal",
 };

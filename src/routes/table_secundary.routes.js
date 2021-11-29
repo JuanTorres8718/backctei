@@ -14,6 +14,7 @@ const {
   getProyectos,
   getCiiu,
   getDisciplina,
+  getFormacion,
 } = require("../controllers/table_secundary.controller");
 
 const router = require("express").Router();
@@ -47,5 +48,7 @@ router.get("/api/table/proyectos", getProyectos);
 router.get("/api/table/ciiu", getCiiu);
 
 router.get("/api/table/disciplina", getDisciplina);
+
+router.get("/api/table/formacion", getFormacion);
 
 module.exports = router;

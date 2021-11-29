@@ -34,6 +34,7 @@ export const createNewProjects = async (req, res) => {
     const dataRubros = req.body.rubros;
     const dataMunicipio = req.body.municipios;
     const dataSemillero = req.body.semilleros;
+    const dataFormacion = req.body.formaciones;
     let valor_servicios_personales = 0;
     let valor_otros_gastos = 0;
     let valor_compra_equipos = 0;
@@ -203,6 +204,14 @@ export const createNewProjects = async (req, res) => {
         .input("codigo_proyecto", dataProject.codigo_proyecto)
         .input("codigo_municipio", municipio.value)
         .query(queries.addDetalleMunicipioProyecto);
+    });
+
+    dataFormacion.map(async (formacion) => {
+      await pool
+        .request()
+        .input("codigo_proyecto", dataProject.codigo_proyecto)
+        .input("codigo_formacion", formacion.value)
+        .query(queries.addDetalleFormacionProyecto);
     });
 
     const project = await pool
